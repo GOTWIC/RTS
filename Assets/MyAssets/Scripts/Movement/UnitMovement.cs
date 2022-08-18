@@ -4,13 +4,14 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using System;
 
 public class UnitMovement : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] private Targeter targeter = null;
-    [SerializeField] private bool stationary = true;
     [SerializeField] private float chaseRange = 50f;
+    [SerializeField] private float agentRotationSpeed = 600f;
 
     private Camera mainCamera;
 
@@ -26,7 +27,7 @@ public class UnitMovement : NetworkBehaviour
         {
             // We want to move if the user set the target
             if (targeter.getTargetSetter() == "user")
-            {
+            {                
                 if ((target.transform.position - transform.position).sqrMagnitude > chaseRange * chaseRange)
                 {
                     agent.SetDestination(target.transform.position);
@@ -40,31 +41,25 @@ public class UnitMovement : NetworkBehaviour
                 return;
             }
 
+            // We don't want to move if the radar set the target
+            // Need to override this, because it stops manual override
             else if(targeter.getTargetSetter() == "radar")
             {
-                // We don't want to move if the radar set the target
                 if (agent.hasPath)
                 {
-                    agent.ResetPath();
+                    //agent.ResetPath();
                 }
 
                 return;
             }
         }
 
+        // This is to stop the units for fighting over each other when they are close enough to the target
         else if(agent.hasPath)
-        {
-            // Prevent scenario where agent position is set and reset in the same frame,
-            // causing the agent to not move at all
-
+        { 
             if (agent.remainingDistance > agent.stoppingDistance) { return; }
 
             agent.ResetPath();
-        }
-
-        else
-        {
-            // Set stztionary to true, Check for enemies to set target
         }
     }
 
@@ -72,7 +67,7 @@ public class UnitMovement : NetworkBehaviour
     public void CmdMove(Vector3 position)
     {
         // Trying to do a normal move should clear the target   
-        targeter.clearTarget();
+        targeter.clearTarget(); 
 
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) { return; }
 
@@ -80,5 +75,10 @@ public class UnitMovement : NetworkBehaviour
     }
 
     #endregion
+
+    public float getAgentRotationSpeed()
+    {
+        return agentRotationSpeed;
+    }
 
 }

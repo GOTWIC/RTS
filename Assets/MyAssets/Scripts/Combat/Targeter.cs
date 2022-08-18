@@ -37,6 +37,15 @@ public class Targeter : NetworkBehaviour
     }
 
     [Server]
+    public void ServerSetTarget(GameObject targetObject, string targetSetter)
+    {
+        if (!targetObject.TryGetComponent<Targetable>(out Targetable target)) { return; }
+
+        this.target = target;
+        this.targetSetter = targetSetter;
+    }
+
+    [Server]
     public void clearTarget()
     {
         target = null;
