@@ -3,31 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.AI;
+using System.Linq;
 
 public class EnemyRadar : NetworkBehaviour
 {
-    [SerializeField] private RadarCollision radarCollision = null;
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] Targeter targeter;
+    [SerializeField] GameObject radarBounds = null;
     [SerializeField] private List<Targetable> enemiesInRange = new List<Targetable>();
+
+    private float detectionRange = 0f;
 
     #region Server
 
-    public override void OnStartServer()
+    [ServerCallback]
+    private void Start()
     {
-        radarCollision.ServerOnTriggerEnter += checkEnemyEnter;
-        radarCollision.ServerOnTriggerExit += checkEnemyExit;
-    }
+        // Make sure the radar scales are set up properly (x,y,z should be the same)
+        Vector3 radarScale = radarBounds.transform.localScale;
+        if(radarScale.x != radarScale.y && radarScale.y != radarScale.z)
+        {
+            Debug.Log("Radar Scale has not been set properly.");
+        }
 
-    public override void OnStopServer()
-    {
-        radarCollision.ServerOnTriggerEnter -= checkEnemyEnter;
-        radarCollision.ServerOnTriggerExit -= checkEnemyExit;
+        else
+        {
+            detectionRange = radarScale.x / 2; // Divide by 2 because the scale is the diameter, and we want the radius
+        }
+        
     }
 
     [ServerCallback]
     private void Update()
     {
+        updateEnemyRadar();
+
         // Check if there is a target
         if(targeter.getTarget() != null)
         {
@@ -79,51 +89,30 @@ public class EnemyRadar : NetworkBehaviour
         targeter.ServerSetTarget(enemiesInRange[0].gameObject, "radar");
     }
 
-    #endregion
-
-    #region Client
-
-
-    private void checkEnemyEnter(Collider other)
+    [Server]
+    private void updateEnemyRadar()
     {
-        //Debug.Log("Entered: " + other.gameObject);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRange);
+        List<Targetable> targets = new List<Targetable>();
 
-        if (other.TryGetComponent<Targetable>(out Targetable target))
+        foreach (var other in hitColliders)
         {
-            // Return if the other object is owned by the same person who owns this unit
-            if(other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))
-            {
-                if (networkIdentity.connectionToClient == connectionToClient) { return; }
-            }
-            
-            // For now, don't include buildings
-            if(!other.TryGetComponent<Unit>(out Unit unit)) { return; }
+            // Continue if object is not targetable
+            if (!other.TryGetComponent<Targetable>(out Targetable target)) { continue; }
 
-            // If we get over here, this means that something entered our detection range which
-            // is targeable, not a friendly object, and is not a building    
-
-            AddEnemy(target);
-            Debug.Log("Enemy has entered range");
-        }
-    }
-
-    private void checkEnemyExit(Collider other)
-    {
-        //Debug.Log("Exited" + other.gameObject);
-
-        if (other.TryGetComponent<Targetable>(out Targetable target))
-        {
+            // Continue if the object is a friendly
             if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))
             {
-                if (networkIdentity.connectionToClient == connectionToClient) { return; }
+                if (networkIdentity.connectionToClient == connectionToClient) { continue; }
             }
 
-            // For now, don't include buildings
-            if (!other.TryGetComponent<Unit>(out Unit unit)) { return; }
+            // For now, only target units
+            if (!other.TryGetComponent<Unit>(out Unit unit)) { continue; }
 
-            RemoveEnemy(target);
-            Debug.Log("Enemy has left range");
+            targets.Add(target);
         }
+
+        enemiesInRange = targets;
     }
 
     #endregion

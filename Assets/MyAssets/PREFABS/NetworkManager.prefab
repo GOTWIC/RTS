@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5317392734254745371
 MonoBehaviour:
@@ -50,8 +50,8 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: 
-  onlineScene: 
+  offlineScene: Assets/SCENES/MenuScene.unity
+  onlineScene: Assets/SCENES/MainScene.unity
   transport: {fileID: 5317392734254745370}
   networkAddress: localhost
   maxConnections: 100
@@ -65,6 +65,7 @@ MonoBehaviour:
   - {fileID: 5813489075932040370, guid: c72d683d9be766942ba3cdec957a5240, type: 3}
   - {fileID: 6393873346634611513, guid: 6123e2d4853558343abc1e79408adcb8, type: 3}
   - {fileID: 3649335873368472833, guid: f97b6d9389b755e449640c4cfaf21783, type: 3}
+  - {fileID: 6875758044953985009, guid: 9c6fdf6a3c1e9db43b83d646a71d405d, type: 3}
   unitSpawnerInstance: {fileID: 5813489075932040370, guid: c72d683d9be766942ba3cdec957a5240,
     type: 3}
 --- !u!114 &5317392734254745370
