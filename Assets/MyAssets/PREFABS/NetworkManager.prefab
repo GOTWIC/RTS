@@ -66,6 +66,7 @@ MonoBehaviour:
   - {fileID: 6393873346634611513, guid: 6123e2d4853558343abc1e79408adcb8, type: 3}
   - {fileID: 3649335873368472833, guid: f97b6d9389b755e449640c4cfaf21783, type: 3}
   - {fileID: 6875758044953985009, guid: 9c6fdf6a3c1e9db43b83d646a71d405d, type: 3}
+  - {fileID: 6260479124331230090, guid: d2742fdb15df77c4db20d20741eac98f, type: 3}
   unitSpawnerInstance: {fileID: 5813489075932040370, guid: c72d683d9be766942ba3cdec957a5240,
     type: 3}
 --- !u!114 &5317392734254745370
