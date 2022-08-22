@@ -43,7 +43,7 @@ public class UnitFiring : NetworkBehaviour
         if (Time.time > (1 / fireRate) + lastFireTime)
         {
             Quaternion projectileRotation = Quaternion.LookRotation(
-                target.getAimPoint().position - projectileSpawnPoint.position);
+                target.getTargetPoint().position - projectileSpawnPoint.position);
             projectileRotation = transform.rotation;
             GameObject projectileInstance = Instantiate(
                 projectilePrefab, projectileSpawnPoint.position, projectileRotation);

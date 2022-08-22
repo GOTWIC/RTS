@@ -5,32 +5,21 @@ using Mirror;
 using UnityEngine.AI;
 using System.Linq;
 
-public class EnemyRadar : NetworkBehaviour
+public class UnitEnemyRadar : NetworkBehaviour
 {
+    [SerializeField] private float detectionRange = 0f;
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] Targeter targeter;
     [SerializeField] GameObject radarBounds = null;
     [SerializeField] private List<Targetable> enemiesInRange = new List<Targetable>();
 
-    private float detectionRange = 0f;
 
     #region Server
 
     [ServerCallback]
     private void Start()
     {
-        // Make sure the radar scales are set up properly (x,y,z should be the same)
-        Vector3 radarScale = radarBounds.transform.localScale;
-        if(radarScale.x != radarScale.y && radarScale.y != radarScale.z)
-        {
-            Debug.Log("Radar Scale has not been set properly.");
-        }
-
-        else
-        {
-            detectionRange = radarScale.x / 2; // Divide by 2 because the scale is the diameter, and we want the radius
-        }
-        
+        radarBounds.transform.localScale = new Vector3(detectionRange * 2, detectionRange * 2, detectionRange * 2);        
     }
 
     [ServerCallback]

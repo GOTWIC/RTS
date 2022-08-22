@@ -6,7 +6,6 @@ using Mirror;
 public class UnitProjectile : NetworkBehaviour
 {
     [SerializeField] private Rigidbody rb = null;
-    [SerializeField] private GameObject bulletImpact = null;
     [SerializeField] private float launchForce = 10f;
     [SerializeField] private float destroyAfterSeconds = 5f;
     [SerializeField] private int damage = 5;
@@ -41,7 +40,7 @@ public class UnitProjectile : NetworkBehaviour
         }
 
         // Object has no health
-        //destroySelf();
+        destroySelf();
     }
 
     [Server]

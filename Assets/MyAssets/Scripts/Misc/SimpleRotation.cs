@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,13 @@ public class SimpleRotation : MonoBehaviour
 
     private float initializationTime;
 
+    [ServerCallback]
     private void Start()
     {
         initializationTime = Time.timeSinceLevelLoad;
     }
 
-    // Update is called once per frame
+    [ServerCallback]
     void Update()
     {
         float timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;

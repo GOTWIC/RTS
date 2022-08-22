@@ -9,11 +9,23 @@ public class ParabolicPathTest : MonoBehaviour
     [SerializeField] public float height;
     [SerializeField] public float timeToTarget;
 
+    Vector3 startPosition;
+
+    private float initializationTime;
+
+    private void Start()
+    {
+        startPosition = transform.position;
+        initializationTime = Time.timeSinceLevelLoad;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        t = (Time.time) / timeToTarget - (int)((Time.time) / timeToTarget);
-        Vector3 currentPosition = SampleParabola(new Vector3(0, 0, 0), new Vector3(10, 0, 10), height, t);
+        float timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;
+
+        t = (timeSinceInitialization) / timeToTarget;// - (int)((Time.time) / timeToTarget);
+        Vector3 currentPosition = SampleParabola(startPosition, new Vector3(10, 0, 10), height, t);
         transform.position = currentPosition;
     }
 
@@ -41,6 +53,4 @@ public class ParabolicPathTest : MonoBehaviour
             return result;
         }
     }
-
-
 }
