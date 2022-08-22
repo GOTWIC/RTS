@@ -16,9 +16,11 @@ public class TurretProjectile : NetworkBehaviour
     [SerializeField] private GameObject fireTrail = null;
     [SerializeField] private GameObject smokeTrail = null;
 
-    private Vector3 targetPosition = new Vector3(-999,-999,-999);
+
+    private Vector3 targetPosition = new Vector3(-999, -999, -999);
 
     private bool hasExploded = false;
+    private GameObject explosionInstance = null;
 
     Vector3 startPosition;
 
@@ -37,17 +39,13 @@ public class TurretProjectile : NetworkBehaviour
         Invoke(nameof(ServerStartDestroySequence), 2);
     }
 
-
-    //[ServerCallback]
     private void Start()
     {
         startPosition = transform.position;
         initializationTime = Time.timeSinceLevelLoad;
     }
 
-    //[ServerCallback]
 
-    // Update is called once per frame
     void Update()
     {
         if (targetPosition == new Vector3(-999, -999, -999)) { return; }
@@ -60,18 +58,20 @@ public class TurretProjectile : NetworkBehaviour
         Vector3 currentPosition = SampleParabola(startPosition, targetPosition, height, t);
         transform.position = currentPosition;
 
-        transform.LookAt(previousPosition   );
+        transform.LookAt(previousPosition);
 
         previousPosition = currentPosition;
 
-        if (!isServer) { return; }
+        if (transform.position.y < 0)
+        {
+            ServerStartDestroySequence();
+            ClientStartDestroySequence();
+        }
 
-        if (transform.position.y < 0) { ServerStartDestroySequence(); }
 
-        
     }
 
-    //[Server]
+
     public Vector3 SampleParabola(Vector3 start, Vector3 end, float height, float t)
     {
         float parabolicT = t * 2 - 1;
@@ -97,7 +97,7 @@ public class TurretProjectile : NetworkBehaviour
         }
     }
 
-    
+
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
@@ -123,6 +123,7 @@ public class TurretProjectile : NetworkBehaviour
         ClientStartDestroySequence();
     }
 
+
     [Server]
     private void ServerStartDestroySequence()
     {
@@ -130,6 +131,7 @@ public class TurretProjectile : NetworkBehaviour
         {
             GameObject explosion = Instantiate(contactExplosion, transform.position, transform.rotation);
             NetworkServer.Spawn(explosion);
+            explosionInstance = explosion;
             hasExploded = true;
         }
 
@@ -148,21 +150,14 @@ public class TurretProjectile : NetworkBehaviour
     [Server]
     private void ServerDestroySelf()
     {
+        NetworkServer.Destroy(explosionInstance);
         NetworkServer.Destroy(gameObject);
     }
 
 
 
-    [ClientRpc]
     private void ClientStartDestroySequence()
     {
-        if (!hasExploded)
-        {
-            GameObject explosion = Instantiate(contactExplosion, transform.position, transform.rotation);
-            NetworkServer.Spawn(explosion);
-            hasExploded = true;
-        }
-
         Destroy(fireTrail);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
 
