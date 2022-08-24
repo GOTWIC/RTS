@@ -72,7 +72,7 @@ MonoBehaviour:
   t: 0
   height: 20
   timeToTarget: 0.7
-  damage: 100
+  damage: 1
   contactExplosion: {fileID: 4778493455726780628, guid: 0675778b3e2f52a469f5d235a8f3b4e5,
     type: 3}
   rb: {fileID: -3523332999564699945}
@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1363784577269114, guid: 83f5e574addfb424ebd95bbb8ff8b080, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4402860524990602, guid: 83f5e574addfb424ebd95bbb8ff8b080, type: 3}
       propertyPath: m_RootOrder
@@ -308,7 +308,7 @@ PrefabInstance:
     - target: {fileID: 4719203769726798623, guid: 2b72651503c84ab46adb2025026daa32,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4719203769726798623, guid: 2b72651503c84ab46adb2025026daa32,
         type: 3}

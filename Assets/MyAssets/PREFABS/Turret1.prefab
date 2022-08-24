@@ -912,16 +912,19 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   targeter: {fileID: 9169757722952615718}
-  gunBase: {fileID: 5209248798793170253}
-  vertialRotationModule: {fileID: 3651055939730659250}
-  idleReference: {fileID: 7618549352993138746}
+  horizontalModule: {fileID: 2932220734297902894}
+  verticalModule: {fileID: 4317409836369528591}
+  idleReference: {fileID: 76010973172135062}
+  idleAnim: {fileID: 2296550054457218969}
   projectilePrefab: {fileID: 2990350243360505719, guid: 9a3f59186e3ae734eb86ef544c5b2977,
     type: 3}
+  smokePrefab: {fileID: 3209938192184126543, guid: d2019404cc50c84488b1abc561901a79,
+    type: 3}
   projectileSpawnPoint: {fileID: 5873954733527906317}
-  anim: {fileID: 2296550054457218969}
   rotationSpeedH: 100
-  rotationSpeedV: 100
+  rotationSpeedV: 50
   fireRate: 0.5
+  showRotation: 0
 --- !u!114 &3208244711790688329
 MonoBehaviour:
   m_ObjectHideFlags: 0

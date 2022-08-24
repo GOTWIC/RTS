@@ -970,7 +970,7 @@ MonoBehaviour:
   syncInterval: 0.1
   spawner: {fileID: 3196740092899048860}
   radarBounds: {fileID: 5428646585651563228}
-  detectionRange: 100
+  detectionRange: 40
   enemiesInRange: []
 --- !u!114 &3901297996757149853
 MonoBehaviour:
