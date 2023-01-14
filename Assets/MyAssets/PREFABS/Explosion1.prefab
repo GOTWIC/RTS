@@ -4936,7 +4936,7 @@ GameObject:
   - component: {fileID: 4778493455744729108}
   - component: {fileID: 1757422681299956678}
   m_Layer: 0
-  m_Name: WFXMR_ExplosiveSmoke Big
+  m_Name: Explosion1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

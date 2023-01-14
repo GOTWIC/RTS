@@ -23,21 +23,26 @@ public class UnitProjectile : NetworkBehaviour
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
-
         // If object we hit is owned by us, return
         if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))
         {
             if (networkIdentity.connectionToClient == connectionToClient) { return; }
         }
 
+        // If the object is a "base" collider, then go through the collider
+        if(other.gameObject.TryGetComponent<Spawner>(out Spawner spawner)) { return; }
+
         // If object has a health, deal damage
-        if(other.TryGetComponent<Health>(out Health health))
+        if (other.TryGetComponent<Health>(out Health health))
         {
             //GameObject explosion = Instantiate(bulletImpact, transform.position, new Quaternion(0, 0, 1, 0) * transform.rotation);
             //NetworkServer.Spawn(explosion);
             health.dealDamage(damage);
             destroySelf();
+            return;
         }
+
+        Debug.Log("Object has no health. Self Destructing.");
 
         // Object has no health
         destroySelf();

@@ -15,6 +15,8 @@ public class UnitFiring : NetworkBehaviour
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float rotationSpeed = 20f;
 
+    [SerializeField] Transform firingPoint;
+
     private float lastFireTime = 0f;
 
     [ServerCallback]
@@ -34,8 +36,21 @@ public class UnitFiring : NetworkBehaviour
         // Disable agent rotation
         agent.angularSpeed = 0;
 
+        // Get the target's transform (could be a turret)
+        Transform targetTransform;
+
+        if (target.getTargetType() == "unit")
+            targetTransform = target.getTargetPoint();
+        else if (target.getTargetType() == "turret")
+            targetTransform = target.getTargetPoint(transform.position);
+        else
+        {
+            Debug.Log("Target type is unknown. Cannot fire.");
+            return;
+        }
+
         // Rotate to target
-        Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - transform.position);
+        Quaternion targetRotation = Quaternion.LookRotation(targetTransform.position - transform.position);
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         
@@ -43,7 +58,7 @@ public class UnitFiring : NetworkBehaviour
         if (Time.time > (1 / fireRate) + lastFireTime)
         {
             Quaternion projectileRotation = Quaternion.LookRotation(
-                target.getTargetPoint().position - projectileSpawnPoint.position);
+                targetTransform.position - projectileSpawnPoint.position);
             projectileRotation = transform.rotation;
             GameObject projectileInstance = Instantiate(
                 projectilePrefab, projectileSpawnPoint.position, projectileRotation);

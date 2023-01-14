@@ -29,12 +29,10 @@ public class UnitCommander : MonoBehaviour
 
         if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)) { return; }
 
-
         playAnimation(hit.point);
 
         if(hit.collider.TryGetComponent<Targetable>(out Targetable target))
-        {
-
+        { 
             if(target.hasAuthority)
             {
                 // Possible grouping mechanics here
@@ -42,7 +40,8 @@ public class UnitCommander : MonoBehaviour
                 return;
             }
 
-            else { 
+            else 
+            { 
                 TryTarget(target);
                 return;
             }

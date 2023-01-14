@@ -564,7 +564,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5209248798793170253}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.2839859, y: 0.45503902, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5016845, y: 1.5016845, z: 1.5016845}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -679,6 +679,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6749312770223810864}
+  - component: {fileID: 326516033892111186}
   - component: {fileID: 7533805069540802727}
   - component: {fileID: 5935983689378615309}
   - component: {fileID: 8511982792186032283}
@@ -686,9 +687,9 @@ GameObject:
   - component: {fileID: 7453827569578899068}
   - component: {fileID: 8241779542625112432}
   - component: {fileID: 9169757722952615718}
-  - component: {fileID: 6722260306442264406}
   - component: {fileID: 1153518621316516743}
   - component: {fileID: 3208244711790688329}
+  - component: {fileID: 126826962332237760}
   m_Layer: 0
   m_Name: Turret1
   m_TagString: Untagged
@@ -705,7 +706,7 @@ Transform:
   m_GameObject: {fileID: 6260479124331230090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2932220734297902894}
@@ -715,6 +716,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &326516033892111186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260479124331230090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.5, y: 12.5, z: 25}
+  m_Center: {x: 0, y: 6, z: 3}
 --- !u!114 &7533805069540802727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,7 +864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxHealth: 100
+  maxHealth: 10000
 --- !u!114 &8241779542625112432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,6 +880,7 @@ MonoBehaviour:
   health: {fileID: 7453827569578899068}
   healthBarParent: {fileID: 9138634385391717629}
   healthBarImage: {fileID: 9138634385580612218}
+  alwaysShown: 1
 --- !u!114 &9169757722952615718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,21 +897,6 @@ MonoBehaviour:
   syncInterval: 0.1
   target: {fileID: 0}
   targetSetter: 
---- !u!114 &6722260306442264406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6260479124331230090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 651767a1e02b9a843988964308b60b88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  targetingPoint: {fileID: 3410241477594405846}
 --- !u!114 &1153518621316516743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,7 +924,6 @@ MonoBehaviour:
   rotationSpeedH: 100
   rotationSpeedV: 50
   fireRate: 0.5
-  showRotation: 0
 --- !u!114 &3208244711790688329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,6 +940,31 @@ MonoBehaviour:
   syncInterval: 0.1
   targeter: {fileID: 9169757722952615718}
   gunBase: {fileID: 5209248798793170253}
+  targetingPoint: {fileID: 3410241477594405846}
+  health: {fileID: 7453827569578899068}
+  deathExplosion: {fileID: 1835671729072583474, guid: bde8593b2a9934d479a6efd9d02a3a81,
+    type: 3}
+--- !u!114 &126826962332237760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260479124331230090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4c85b0367e6104889d8bb6ec47c7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  albedoColorPlayer: {r: 1, g: 1, b: 1, a: 0}
+  emissionColorPlayer: {r: 0, g: 0.5674441, b: 1, a: 0}
+  albedoColorEnemy: {r: 1, g: 0, b: 0, a: 0}
+  emissionColorEnemy: {r: 1, g: 0, b: 0, a: 0}
+  gunBase: {fileID: 5209248798793170253}
+  turretAccents: []
+  listOfChildren: []
 --- !u!1 &6702381761381254804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1178,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2898269452569510714, guid: 331fd71ab9c97424faeba61073a7b25f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1192,12 +1221,12 @@ PrefabInstance:
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}
@@ -1242,7 +1271,7 @@ PrefabInstance:
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 11.04
       objectReference: {fileID: 0}
     - target: {fileID: 2898269452569510718, guid: 331fd71ab9c97424faeba61073a7b25f,
         type: 3}

@@ -8,6 +8,9 @@ public class Turret : NetworkBehaviour
 {
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private GameObject gunBase = null;
+    [SerializeField] private Transform targetingPoint = null;
+    [SerializeField] private Health health = null;
+    [SerializeField] private GameObject deathExplosion = null;
 
     public void Start()
     {
@@ -33,6 +36,30 @@ public class Turret : NetworkBehaviour
     public void ServerClearTarget()
     {
         targeter.clearTarget();
+    }
+
+    public Transform getTargetPoint()
+    {
+        return targetingPoint;
+    }
+
+    private void Awake()
+    {
+        health.ServerOnDie += dyingSequence;
+    }
+
+    private void OnDestroy()
+    {
+        health.ServerOnDie += dyingSequence;
+    }
+
+
+    public void dyingSequence()
+    {
+        GameObject explosion = Instantiate(deathExplosion, transform.position, transform.rotation);
+        NetworkServer.Spawn(explosion);
+
+        NetworkServer.Destroy(gameObject);
     }
 
 }

@@ -276,8 +276,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rb: {fileID: 9096543072763618735}
-  bulletImpact: {fileID: 6875758044953985009, guid: 9c6fdf6a3c1e9db43b83d646a71d405d,
-    type: 3}
   launchForce: 100
   destroyAfterSeconds: 2
   damage: 5

@@ -9,7 +9,6 @@ public class BaseCustomization : NetworkBehaviour
 {
     [SerializeField] private TMP_Text baseName = null;
     [SerializeField] private GameObject haloRing = null;
-    [SerializeField] private GameObject[] turrets; // Might change to target transform later
 
     [SerializeField] private Color albedoColorPlayer;
     [SerializeField] private Color emissionColorPlayer;

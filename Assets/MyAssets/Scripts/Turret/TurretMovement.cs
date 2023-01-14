@@ -24,8 +24,6 @@ public class TurretMovement : NetworkBehaviour
     [SerializeField] private float rotationSpeedV = 20f;
     [SerializeField] private float fireRate = 1f;
 
-    [SerializeField] private bool showRotation = false;
-
     private bool isIdle = false;
     private float lastFireTime = 0f;
 
@@ -40,8 +38,6 @@ public class TurretMovement : NetworkBehaviour
     void Update()
     {
         Targetable target = targeter.getTarget();
-
-        if (showRotation) { Debug.Log(verticalModule.rotation.eulerAngles.x); }
 
         if (target != null)
         {

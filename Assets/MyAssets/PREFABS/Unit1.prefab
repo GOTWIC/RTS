@@ -218,6 +218,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   targetingPoint: {fileID: 5094726492860987881}
+  targetingPoints: []
+  targetType: unit
 --- !u!114 &657677723510931495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,8 +257,9 @@ MonoBehaviour:
   agent: {fileID: 8068742963244875356}
   unitMovement: {fileID: 3909707443842564599}
   firingRange: 52
-  fireRate: 6
+  fireRate: 2
   rotationSpeed: 120
+  firingPoint: {fileID: 0}
 --- !u!114 &9192499562835632794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +290,7 @@ MonoBehaviour:
   health: {fileID: 9192499562835632794}
   healthBarParent: {fileID: 5624814620669117832}
   healthBarImage: {fileID: 5624814620891566863}
+  alwaysShown: 0
 --- !u!114 &8865256519528755391
 MonoBehaviour:
   m_ObjectHideFlags: 0

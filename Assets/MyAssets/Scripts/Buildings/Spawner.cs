@@ -10,12 +10,13 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
     [SerializeField] private Transform unitSpawnPoint = null;
     [SerializeField] private GameObject baseUIParent = null;
     [SerializeField] private Transform[] turretLocations = null;
+    [SerializeField] private Targetable targetable = null;
 
     [SerializeField] private GameObject[] spawnableUnits;
     [SerializeField] private GameObject[] spawnableTurrets;
 
     private GameObject[] turrets = new GameObject[6];
-    private List<int> openTurretLocations = new List<int>();// Remove serialize field later
+    private List<int> openTurretLocations = new List<int>();
 
     #region Server
 
@@ -24,8 +25,12 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
     {
         GameObject unitPrefab = spawnableUnits[unitID];
 
+        Vector3 spawnPoint = new Vector3(unitSpawnPoint.position.x, 0, unitSpawnPoint.position.z);
+
         // Spawns on Server
-        GameObject prefabInstance = Instantiate(unitPrefab, unitSpawnPoint.position, unitSpawnPoint.rotation);
+        GameObject prefabInstance = Instantiate(unitPrefab, spawnPoint, unitSpawnPoint.rotation);
+
+        Debug.Log(spawnPoint);
 
         // Spawns on Network
         // "connectionToClient" makes sure that the spawned object belongs to me
@@ -47,6 +52,9 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
 
         // Since the location is now taken, remove it from the list of available spots
         openTurretLocations.RemoveAt(0);
+
+        // Add the turret's target point to the building's targetable script
+        targetable.addTargetPoint(prefabInstance.GetComponent<Turret>().getTargetPoint());
     }
 
     void Update()
