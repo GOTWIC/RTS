@@ -76,7 +76,7 @@ MonoBehaviour:
     type: 3}
   numBasesToSpawn: 1000
   maxSpawnRetries: 3
-  minSpawnDistance: 300
+  minSpawnDistance: 500
   xSpawnRange: a0f6ffff60090000
   zSpawnRange: a0f6ffff60090000
   layerMask:

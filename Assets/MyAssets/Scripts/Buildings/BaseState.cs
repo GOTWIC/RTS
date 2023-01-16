@@ -1,7 +1,7 @@
 using UnityEngine;
 using Mirror;
 
-public class Conquerment : NetworkBehaviour
+public class BaseState : NetworkBehaviour
 {
     [SerializeField] private Targetable targetable = null;
     [SyncVar]
@@ -20,9 +20,20 @@ public class Conquerment : NetworkBehaviour
 
         // If we get here, either the base is conquerable or transitioning
 
+        if(baseOwnershipState != "transitioning") { baseOwnershipState = "conquerable"; }
 
-
-
+        // Check if there is an APC nearby
         
+
+        // Might want to trigger some events at some point
+
+        // We need to reset network connection etc
+        
+    }
+
+    [Server]
+    public string getBaseState()
+    {
+        return baseOwnershipState;
     }
 }

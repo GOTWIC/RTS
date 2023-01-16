@@ -734,8 +734,8 @@ MonoBehaviour:
   agent: {fileID: 1033257845975410482}
   targeter: {fileID: 7534445311240296777}
   chaseRange: 70
-  agentRotationSpeed: 50
-  agentMovementSpeed: 600
+  agentRotationSpeed: 10
+  agentMovementSpeed: 10
 --- !u!114 &2143645010740285051
 MonoBehaviour:
   m_ObjectHideFlags: 0

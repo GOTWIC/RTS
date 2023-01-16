@@ -43,7 +43,7 @@ public class UnitFiring : NetworkBehaviour
             targetTransform = target.getTargetPoint();
 
         // If the target is a turret, we want to get the turret closest to the unit
-        else if (target.getTargetType() == "turret"){
+        else if (target.getTargetType() == "base"){
             targetTransform = target.getTargetPoint(transform.position);
             // Target does not exist
             if(targetTransform == null)
@@ -51,7 +51,7 @@ public class UnitFiring : NetworkBehaviour
                 // If we don't have a target, set the agent's angular speed to normal
                 agent.angularSpeed = unitMovement.getAgentRotationSpeed();
                 // This also means that the target building has no targetting points (turrets) left
-                // So we reset the target variable as well
+                // So we clear the target variable under the unit's targetter script as well
                 targeter.clearTarget();
                 return;
             }

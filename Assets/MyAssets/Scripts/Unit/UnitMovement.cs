@@ -28,9 +28,16 @@ public class UnitMovement : NetworkBehaviour
         {
             // We want to move if the user set the target
             if (targeter.getTargetSetter() == "user")
-            {                
+            {
+                // No need to go further when chasing if the target is in range
                 if ((target.transform.position - transform.position).sqrMagnitude > chaseRange * chaseRange)
                 {
+                    // Check if unit is an APC
+                    if (gameObject.TryGetComponent<UnitConquering>(out UnitConquering conquering)) {
+                        // Don't move if APC's target is not valid
+                        if (!conquering.HasValidTarget()){ return; }
+                    }
+
                     agent.SetDestination(target.transform.position);
                     //agent.speed = agentMovementSpeed;
                 }
