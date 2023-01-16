@@ -385,6 +385,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
+      propertyPath: maxSpawnRetries
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
+      propertyPath: numBasesToSpawn
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
+      propertyPath: minSpawnDistance
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 5317392734254745440, guid: 15ff3c5ce7086264d9b58210cf371ae6,
         type: 3}
       propertyPath: m_Name

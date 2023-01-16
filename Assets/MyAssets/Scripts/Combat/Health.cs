@@ -9,6 +9,7 @@ public class Health : NetworkBehaviour
     [SerializeField] private int maxHealth = 100;
 
     [SyncVar(hook=nameof(handleHealthUpdates))]
+    [SerializeField]
     private int currentHealth;
 
     public event Action ServerOnDie;

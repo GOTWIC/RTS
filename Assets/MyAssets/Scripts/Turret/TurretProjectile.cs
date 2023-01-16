@@ -62,13 +62,11 @@ public class TurretProjectile : NetworkBehaviour
 
         previousPosition = currentPosition;
 
-        if (transform.position.y < 0)
+        if (transform.position.y < -5)
         {
             ServerStartDestroySequence();
-            ClientStartDestroySequence();
+            ClientStartDestroySequence(true);
         }
-
-
     }
 
 
@@ -115,12 +113,12 @@ public class TurretProjectile : NetworkBehaviour
             //NetworkServer.Spawn(explosion);
             health.dealDamage(damage);
             ServerStartDestroySequence();
-            ClientStartDestroySequence();
+            ClientStartDestroySequence(false);
         }
 
         // Object has no health
         ServerStartDestroySequence();
-        ClientStartDestroySequence();
+        ClientStartDestroySequence(false);
     }
 
 
@@ -129,9 +127,9 @@ public class TurretProjectile : NetworkBehaviour
     {
         if (!hasExploded)
         {
-            GameObject explosion = Instantiate(contactExplosion, transform.position, transform.rotation);
-            NetworkServer.Spawn(explosion);
-            explosionInstance = explosion;
+            //GameObject explosion = Instantiate(contactExplosion, transform.position, transform.rotation);
+            //NetworkServer.Spawn(explosion);
+            //explosionInstance = explosion;
             hasExploded = true;
         }
 
@@ -144,20 +142,28 @@ public class TurretProjectile : NetworkBehaviour
 
             child.gameObject.SetActive(false);
         }
-        Invoke(nameof(ServerDestroySelf), 3f);
+        Invoke(nameof(ServerDestroySelf), 8f);
     }
 
     [Server]
     private void ServerDestroySelf()
     {
-        NetworkServer.Destroy(explosionInstance);
+        //NetworkServer.Destroy(explosionInstance);
         NetworkServer.Destroy(gameObject);
     }
 
 
 
-    private void ClientStartDestroySequence()
+    private void ClientStartDestroySequence(bool hit_air)
     {
+        if (!hasExploded)
+        {
+            GameObject explosion = Instantiate(contactExplosion, transform.position, transform.rotation);
+            if (hit_air) { explosion.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); }
+            explosionInstance = explosion;
+            hasExploded = true;
+        }
+
         Destroy(fireTrail);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
 
@@ -167,12 +173,13 @@ public class TurretProjectile : NetworkBehaviour
 
             child.gameObject.SetActive(false);
         }
-        Invoke(nameof(ClientDestroySelf), 3f);
+        Invoke(nameof(ClientDestroySelf), 8f);
     }
 
 
     private void ClientDestroySelf()
     {
+        if(explosionInstance != null) { Destroy(explosionInstance); }
         Destroy(gameObject);
     }
 

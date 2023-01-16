@@ -724,9 +724,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6260479124331230090}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 8.5, y: 12.5, z: 25}
   m_Center: {x: 0, y: 6, z: 3}
 --- !u!114 &7533805069540802727
@@ -923,7 +931,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 5873954733527906317}
   rotationSpeedH: 100
   rotationSpeedV: 50
-  fireRate: 0.5
+  fireRate: 1
 --- !u!114 &3208244711790688329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1178,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 6749312770223810864}
     m_Modifications:
     - target: {fileID: 2898269452569510714, guid: 331fd71ab9c97424faeba61073a7b25f,
@@ -1289,7 +1297,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331fd71ab9c97424faeba61073a7b25f, type: 3}
 --- !u!224 &9138634385391717625 stripped
 RectTransform:

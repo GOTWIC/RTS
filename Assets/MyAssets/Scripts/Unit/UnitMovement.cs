@@ -12,6 +12,7 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private float chaseRange = 50f;
     [SerializeField] private float agentRotationSpeed = 600f;
+    [SerializeField] private float agentMovementSpeed = 600f;
 
     private Camera mainCamera;
 
@@ -31,6 +32,7 @@ public class UnitMovement : NetworkBehaviour
                 if ((target.transform.position - transform.position).sqrMagnitude > chaseRange * chaseRange)
                 {
                     agent.SetDestination(target.transform.position);
+                    agent.speed = agentMovementSpeed;
                 }
 
                 else if (agent.hasPath)
