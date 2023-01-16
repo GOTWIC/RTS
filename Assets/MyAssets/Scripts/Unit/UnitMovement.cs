@@ -32,7 +32,7 @@ public class UnitMovement : NetworkBehaviour
                 if ((target.transform.position - transform.position).sqrMagnitude > chaseRange * chaseRange)
                 {
                     agent.SetDestination(target.transform.position);
-                    agent.speed = agentMovementSpeed;
+                    //agent.speed = agentMovementSpeed;
                 }
 
                 else if (agent.hasPath)

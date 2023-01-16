@@ -14,6 +14,11 @@ public class Targetable : NetworkBehaviour
         return targetingPoint;
     }
 
+    public List<Transform> getTargetingPoints()
+    {
+        return targetingPoints;
+    }
+
     public Transform getTargetPoint(Vector3 position)
     {
         Transform closestTurret = null;

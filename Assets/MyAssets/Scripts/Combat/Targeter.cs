@@ -27,6 +27,8 @@ public class Targeter : NetworkBehaviour
 
     #region Server
 
+
+    // This command is very questionable, look into later (client shouldn't be making decisons without validation)
     [Command]
     public void CmdSetTarget(GameObject targetObject, string targetSetter)
     {

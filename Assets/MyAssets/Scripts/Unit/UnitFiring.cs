@@ -24,7 +24,7 @@ public class UnitFiring : NetworkBehaviour
     {
         Targetable target = targeter.getTarget();
 
-        if(target == null) {
+        if(target == null){
             // If we don't have a target, set the agent's angular speed to normal
             agent.angularSpeed = unitMovement.getAgentRotationSpeed();
             return;
@@ -41,8 +41,21 @@ public class UnitFiring : NetworkBehaviour
 
         if (target.getTargetType() == "unit")
             targetTransform = target.getTargetPoint();
-        else if (target.getTargetType() == "turret")
+
+        // If the target is a turret, we want to get the turret closest to the unit
+        else if (target.getTargetType() == "turret"){
             targetTransform = target.getTargetPoint(transform.position);
+            // Target does not exist
+            if(targetTransform == null)
+            {
+                // If we don't have a target, set the agent's angular speed to normal
+                agent.angularSpeed = unitMovement.getAgentRotationSpeed();
+                // This also means that the target building has no targetting points (turrets) left
+                // So we reset the target variable as well
+                targeter.clearTarget();
+                return;
+            }
+        }
         else
         {
             Debug.Log("Target type is unknown. Cannot fire.");
@@ -59,7 +72,7 @@ public class UnitFiring : NetworkBehaviour
         {
             Quaternion projectileRotation = Quaternion.LookRotation(
                 targetTransform.position - projectileSpawnPoint.position);
-            projectileRotation = transform.rotation;
+            //projectileRotation = transform.rotation;
             GameObject projectileInstance = Instantiate(
                 projectilePrefab, projectileSpawnPoint.position, projectileRotation);
 

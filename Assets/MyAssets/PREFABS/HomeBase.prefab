@@ -1360,6 +1360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  targetable: {fileID: 8816252682280445342}
+  isConquerable: 0
 --- !u!1 &6539447748948052281
 GameObject:
   m_ObjectHideFlags: 0

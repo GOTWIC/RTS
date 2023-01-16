@@ -3,16 +3,26 @@ using Mirror;
 
 public class Conquerment : NetworkBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Targetable targetable = null;
+    [SyncVar]
+    [SerializeField] private string baseOwnershipState = "";
 
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    [ServerCallback]
     void Update()
     {
+        // If the base has turrets, the base is not conquerable
+        if(targetable.getTargetingPoints().Count > 0) {baseOwnershipState = "owned"; return; }
+
+        // If we get here, either the base is conquerable or transitioning
+
+
+
+
         
     }
 }

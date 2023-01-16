@@ -23,6 +23,9 @@ public class UnitProjectile : NetworkBehaviour
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
+        // If the object is the floor, ignore
+        if (other.gameObject.tag == "Floor") { return; }
+
         // If object we hit is owned by us, return
         if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))
         {
@@ -43,6 +46,7 @@ public class UnitProjectile : NetworkBehaviour
         }
 
         Debug.Log("Object has no health. Self Destructing.");
+        Debug.Log(other.gameObject.name);
 
         // Object has no health
         destroySelf();
