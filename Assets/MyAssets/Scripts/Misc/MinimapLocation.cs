@@ -14,6 +14,5 @@ public class MinimapLocation : MonoBehaviour
     {
         baseLoc = gameObject.transform.position;
         minimapIcon.transform.position = new Vector3(baseLoc.x / 1000f, 1000.5f, (baseLoc.z + offset) / 1000f);
-        Debug.Log(minimapIcon.transform.position);
     }
 }
