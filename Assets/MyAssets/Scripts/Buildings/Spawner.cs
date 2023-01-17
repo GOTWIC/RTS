@@ -60,12 +60,8 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
     [Server]
     public void ServerSpawnTurret(int turretID)
     {
-        Debug.Log(2);
-
         ServerTurretUpdate();
         if (openTurretLocations.Count == 0) { return; }
-
-        Debug.Log(2);
 
         int availableIndex = openTurretLocations[0];
 
