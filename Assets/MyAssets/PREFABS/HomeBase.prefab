@@ -634,7 +634,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 7, y: 3}
+  m_SizeDelta: {x: 20, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4708154297731510136
 CanvasRenderer:
@@ -1445,12 +1445,15 @@ MonoBehaviour:
   baseName: {fileID: 335370418626334074}
   haloRing: {fileID: 2739146231092375196}
   mapIconOBJ: {fileID: 2412688269244759075}
+  baseState: {fileID: 8010608013523979056}
   albedoColorPlayer: {r: 0, g: 1, b: 0.96862745, a: 0}
   emissionColorPlayer: {r: 0, g: 0.4528302, b: 0.43862376, a: 0}
   mapIconColorPlayer: {r: 0, g: 0.6480746, b: 1, a: 1}
   albedoColorEnemy: {r: 1, g: 0, b: 0, a: 0}
   emissionColorEnemy: {r: 0.4056604, g: 0, b: 0, a: 0}
   mapIconColorEnemy: {r: 1, g: 0, b: 0, a: 0}
+  albedoColorUnoccupied: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  emissionColorUnoccupied: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
 --- !u!114 &424296339471539274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1600,7 +1603,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 7, y: 3}
+  m_SizeDelta: {x: 20, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &860029510095660283
 Canvas:

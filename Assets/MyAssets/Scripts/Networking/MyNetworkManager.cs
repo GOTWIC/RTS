@@ -1,5 +1,8 @@
 using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEngine.UIElements;
 
 public class MyNetworkManager : NetworkManager
 {
@@ -10,20 +13,49 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] private float minSpawnDistance = 100f;
     [SerializeField] private int[] xSpawnRange = new int[] {-2400, 2400};
     [SerializeField] private int[] zSpawnRange = new int[] { -2400, 2400 };
-    [SerializeField] private LayerMask layerMask = new LayerMask();
+    private List<GameObject> baseList = new List<GameObject>();
+
+    private Camera mainCamera = null;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
 
-        // Spawns on Server
-        // "conn.identity.transform is how you get transform of the player object"
-        // conn.identity.transform.position is essentially the spawn points in the game. Might have to change this later for randomization
-        GameObject spawnerInstance = Instantiate(unitSpawnerInstance, conn.identity.transform.position, conn.identity.transform.rotation);
 
-        //Spawns on Network
-        NetworkServer.Spawn(spawnerInstance, conn);
-        
+        // Pick a random base
+        int baseNum = Random.Range(0, baseList.Count);
+
+        // Retries
+        int maxHomeRetries = 100;
+        int retries = 0;
+
+        // Try to randomly spawn first
+        while (baseList[baseNum].GetComponent<NetworkIdentity>().connectionToClient != null && retries < maxHomeRetries)
+        {
+            baseNum = Random.Range(0, baseList.Count);
+            retries += 1;
+        }
+
+        // If by extreme chance the base is unable to spawn, iterate over the collection to guarentee a spawn
+        if(retries == 10)
+        {
+            for(int i = 0; i < baseList.Count; i++)
+            {
+                baseNum = Random.Range(0, baseList.Count);
+                if (baseList[baseNum].GetComponent<NetworkIdentity>().connectionToClient == null) { break; }
+            }
+        }
+
+        // Assign base to client
+        baseList[baseNum].GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
+
+        // Get the main camera
+        mainCamera = Camera.main;
+
+        Vector3 basePos = baseList[baseNum].transform.position;
+
+        // Move the camera to the home base's position
+        mainCamera.transform.position = new Vector3(basePos.x, mainCamera.transform.position.y, basePos.z + 100);
     }
 
     public override void OnStartServer()
@@ -67,6 +99,7 @@ public class MyNetworkManager : NetworkManager
                 GameObject spawnerInstance = Instantiate(unitSpawnerInstance, spawnPos, Quaternion.identity);
                 NetworkServer.Spawn(spawnerInstance);
                 basesSpawned += 1;
+                baseList.Add(spawnerInstance);
             }
         }
 

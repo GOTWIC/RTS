@@ -10,13 +10,19 @@ public class BaseCustomization : NetworkBehaviour
     [SerializeField] private TMP_Text baseName = null;
     [SerializeField] private GameObject haloRing = null;
     [SerializeField] private GameObject mapIconOBJ = null;
+    [SerializeField] private BaseState baseState = null;
 
     [SerializeField] private Color albedoColorPlayer;
     [SerializeField] private Color emissionColorPlayer;
     [SerializeField] private Color mapIconColorPlayer;
+
+
     [SerializeField] private Color albedoColorEnemy;
     [SerializeField] private Color emissionColorEnemy;
     [SerializeField] private Color mapIconColorEnemy;
+
+    [SerializeField] private Color albedoColorUnoccupied;
+    [SerializeField] private Color emissionColorUnoccupied;
 
 
     private List<Material> ringMaterials;
@@ -59,8 +65,18 @@ public class BaseCustomization : NetworkBehaviour
 
         else
         {
-            baseName.text = "Enemy";
-            baseName.color = new Color(255, 0, 0);
+            // Check if its a neutral base
+            if(baseState.getBaseState() == "conquerable")
+            {
+                baseName.text = "Neutral";
+                baseName.color = new Color(150, 150, 150);
+            }
+
+            else
+            {
+                baseName.text = "Enemy";
+                baseName.color = new Color(255, 0, 0);
+            } 
         }
     }
 
@@ -76,10 +92,22 @@ public class BaseCustomization : NetworkBehaviour
 
         else
         {
-            ringLight.color = albedoColorEnemy;
-            ringLight.SetColor("_EmissionColor", emissionColorEnemy);
-            ringDots.color = albedoColorEnemy;
-            ringDots.SetColor("_EmissionColor", emissionColorEnemy);
+            // Check if its a neutral base
+            if (baseState.getBaseState() == "conquerable")
+            {
+                ringLight.color = albedoColorUnoccupied;
+                ringLight.SetColor("_EmissionColor", emissionColorUnoccupied);
+                ringDots.color = albedoColorUnoccupied;
+                ringDots.SetColor("_EmissionColor", emissionColorUnoccupied);
+            }
+
+            else
+            {
+                ringLight.color = albedoColorEnemy;
+                ringLight.SetColor("_EmissionColor", emissionColorEnemy);
+                ringDots.color = albedoColorEnemy;
+                ringDots.SetColor("_EmissionColor", emissionColorEnemy);
+            }
         }
     }
 

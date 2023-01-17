@@ -387,6 +387,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
         type: 3}
+      propertyPath: numBasesToSpawn
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
+      propertyPath: minSpawnDistance
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317392734254745371, guid: 15ff3c5ce7086264d9b58210cf371ae6,
+        type: 3}
       propertyPath: spawnPrefabs.Array.size
       value: 11
       objectReference: {fileID: 0}
