@@ -57,6 +57,32 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
         targetable.addTargetPoint(prefabInstance.GetComponent<Turret>().getTargetPoint());
     }
 
+    [Server]
+    public void ServerSpawnTurret(int turretID)
+    {
+        Debug.Log(2);
+
+        ServerTurretUpdate();
+        if (openTurretLocations.Count == 0) { return; }
+
+        Debug.Log(2);
+
+        int availableIndex = openTurretLocations[0];
+
+        GameObject turretPrefab = spawnableTurrets[turretID];
+
+        GameObject prefabInstance = Instantiate(turretPrefab, turretLocations[availableIndex].position, turretLocations[availableIndex].rotation);
+        NetworkServer.Spawn(prefabInstance, connectionToClient);
+        turrets[availableIndex] = prefabInstance;
+
+        // Since the location is now taken, remove it from the list of available spots
+        openTurretLocations.RemoveAt(0);
+
+
+        // Add the turret's target point to the building's targetable script
+        targetable.addTargetPoint(prefabInstance.GetComponent<Turret>().getTargetPoint());
+    }
+
     void Update()
     {
         if (hasAuthority)
@@ -87,6 +113,31 @@ public class Spawner : NetworkBehaviour//, IPointerClickHandler
             }
 
             
+            // The index has a turret, so update it's position and rotation
+            Transform location = (Transform)turretLocations.GetValue(i);
+            turret.transform.position = location.position;
+            turret.transform.rotation = location.rotation;
+        }
+    }
+
+    [Server]
+    private void ServerTurretUpdate()
+    {
+        // Iterate through each turret
+        for (int i = 0; i < turrets.Length; i++)
+        {
+            GameObject turret = turrets[i];
+
+            // If the index has no turret, then it was destroyed or not created,
+            // so add it to the list of available spots
+            if (turret == null)
+            {
+                if (openTurretLocations.Contains(i)) { continue; }
+                openTurretLocations.Add(i);
+                continue;
+            }
+
+
             // The index has a turret, so update it's position and rotation
             Transform location = (Transform)turretLocations.GetValue(i);
             turret.transform.position = location.position;

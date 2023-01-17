@@ -13,6 +13,8 @@ public class UnitConquering : NetworkBehaviour
         // Check if there is a target
         Targetable target = targeter.getTarget();
 
+        if(target == null) { return; }
+
         // Clear and Return if the target isn't a base
         if(target.getTargetType() != "base"){ 
             targeter.clearTarget();
@@ -39,5 +41,11 @@ public class UnitConquering : NetworkBehaviour
     public bool HasValidTarget()
     {
         return hasValidTarget;
+    }
+
+    [Server]
+    public void selfDestruct()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 }

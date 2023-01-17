@@ -1498,6 +1498,7 @@ MonoBehaviour:
   syncInterval: 0.1
   targetable: {fileID: 8816252682280445342}
   baseOwnershipState: 
+  spawner: {fileID: 3196740092899048860}
 --- !u!1 &6539447748948052281
 GameObject:
   m_ObjectHideFlags: 0
