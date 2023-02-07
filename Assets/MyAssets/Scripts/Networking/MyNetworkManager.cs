@@ -1,8 +1,6 @@
 using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEngine.UIElements;
 
 public class MyNetworkManager : NetworkManager
 {
@@ -15,7 +13,11 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] private int[] zSpawnRange = new int[] { -2400, 2400 };
     private List<GameObject> baseList = new List<GameObject>();
 
+    [SerializeField] private GameObject cube = null;
+
     private Camera mainCamera = null;
+
+
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
@@ -61,6 +63,11 @@ public class MyNetworkManager : NetworkManager
     public override void OnStartServer()
     {
         base.OnStartServer();
+    }
+
+    public void Update()
+    {
+        cube.transform.position = new Vector3(cube.transform.position.x + 0.01f, cube.transform.position.y, cube.transform.position.z);
     }
 
     [Server]
